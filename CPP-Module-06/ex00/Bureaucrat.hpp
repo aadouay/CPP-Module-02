@@ -14,8 +14,8 @@ class Bureaucrat{
     Bureaucrat& operator=(const Bureaucrat& other);
     ~Bureaucrat();
 
-    const   std::string get_name();
-    short   getGrade();
+    const   std::string get_name() const;
+    short   getGrade() const;
     void    set_Grade(int grade);
 
 };

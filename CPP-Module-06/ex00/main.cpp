@@ -26,20 +26,37 @@
 //     return 0;
 // }
 
-int main(){
 
-    try{
-        int *ptr = new int[10000000000];
-        std::cout << "alocation is done !\n";
-        delete[] ptr;
+class printer{
+    std::string _name;
+    int _availabelpaper;
+
+    public:
+        printer(std::string name, int paper){
+            _name = name;
+            _availabelpaper = paper;
+        }
+        void    print(std::string txtDoc){
+            int requiredPaper = txtDoc.length() / 10;
+            if(requiredPaper > _availabelpaper){
+                throw "No paper";
+            }
+            std::cout << "printing..." << txtDoc << std::endl;
+            _availabelpaper -= requiredPaper;
+        }
+};
+
+int main(){
+    printer myPrinter("HP Deskjak", 10);
+
+    try
+    {
+        myPrinter.print("hello my name is ayoub, I'm a sofware engenrie");
+        myPrinter.print("hello my name is ayoub, I'm a sofware engenrie");
+        myPrinter.print("hello my name is ayoub, I'm a sofware engenrie");
     }
-    catch(std::bad_alloc& e){
-        std::cout << "bad alocation adada mohim program nk haty ratnkml anzry lmochkilad !\n";
+    catch(const char *txtEx)
+    {
+        std::cerr << "Ex :" << txtEx << std::endl;
     }
-    std::cout << "howa hadak\n";
 }
-/* Output:
-Exception caught: Division by zero is not allowed!
-Program continues running instead of terminating abnormally.
-Program completed successfully!
-*/

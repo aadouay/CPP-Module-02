@@ -5,32 +5,31 @@ Bureaucrat::Bureaucrat():_name("Defautl"), _grade(150){
 }
 
 Bureaucrat::Bureaucrat(const std::string  name, int grade):_name(name){
-    std::cout << "Copy constructor called" << std::endl;
+    std::cout << "constractor overloading called" << std::endl;
     set_Grade(grade);
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& other){
+Bureaucrat::Bureaucrat(const Bureaucrat& other): _name(other._name){
+    std::cout << "Copy constractor called" << std::endl;
+    this->_grade = other._grade;
+}
+
+Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
     std::cout << "Copy assignment operator called" << std::endl;
     // this->_name = other._name;
     this->_grade = other._grade;
 }
 
-Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
-    // this->_name = other._name;
-    this->_grade = other._grade;
-}
-
-const   std::string Bureaucrat::get_name(){
+const   std::string Bureaucrat::get_name() const{
     return  this->_name;
 }
-short   Bureaucrat::getGrade(){
+short   Bureaucrat::getGrade() const{
     return this->_grade;
 }
 
 Bureaucrat::~Bureaucrat(){
     std::cout << "Destructor called" << std::endl;
 }
-
 
 void    Bureaucrat::set_Grade(int grade){
 
