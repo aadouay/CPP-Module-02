@@ -18,6 +18,7 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
     std::cout << "Copy assignment operator called" << std::endl;
     // this->_name = other._name;
     this->_grade = other._grade;
+    return *this;
 }
 
 const   std::string Bureaucrat::get_name() const{
@@ -31,15 +32,38 @@ Bureaucrat::~Bureaucrat(){
     std::cout << "Destructor called" << std::endl;
 }
 
+const char* Bureaucrat::GradeTooHighException::what() const throw(){
+    return "Grade To High\n";
+}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw(){
+    return "Grade To Low\n";
+}
+
 void    Bureaucrat::set_Grade(int grade){
 
     if(grade >= 1 && grade <= 150)
         this->_grade = grade;
+    else if(grade < 1)
+        throw GradeTooHighException();
     else
-        std::cout << "ikhanad orikhdm";
+        throw GradeTooLowException();
+}
+
+void    Bureaucrat::increment(){
+    if(_grade > 1)
+        this->_grade -= 1;
+    else
+        throw GradeTooHighException();
+}
+void    Bureaucrat::decrement(){
+    if(_grade < 150)
+        this->_grade += 1;
+    else
+        throw GradeTooLowException();
 }
 
 std::ostream&  operator<<(std::ostream& os, const Bureaucrat& other){
-    os << other.get_name() << other.getGrade() << std::endl;
+    os << other.get_name() << " bureaucrat grade is " << other.getGrade() << std::endl;
     return os;
 }

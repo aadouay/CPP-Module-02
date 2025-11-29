@@ -4,7 +4,7 @@ FLAGS   = -std=c++98 -Wall -Wextra -Werror
 RM      = rm -rf
 
 
-SRC  = main.cpp \
+SRC  = main.cpp Bureaucrat.cpp
 OBJ     = $(SRC:.cpp=.o)
 
 all: $(NAME)
