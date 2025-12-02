@@ -1,7 +1,10 @@
+#ifndef FORM_HPP
+#define FORM_HPP
+
 #include <iostream>
 #include <stdexcept>
-#include "Bureaucrat.hpp"
 
+class Bureaucrat;
 class Form{
     private:
         const   std::string _Name;
@@ -23,6 +26,13 @@ class Form{
             public:
             const char* what() const throw();
         };
+        void    beSigned(Bureaucrat& man);
+        const   std::string& getName() const;
+        bool    getSigned() const;
+        int     getGradeToSign() const;
+        int     getGradeToExecute() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Form& other);
+
+#endif

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include "Form.hpp"
 
 class Bureaucrat{
     private:
@@ -27,6 +28,7 @@ class Bureaucrat{
         void    set_Grade(int grade);
         void    increment();
         void    decrement();
+        void    signForm(Form& form);
 
 };
 

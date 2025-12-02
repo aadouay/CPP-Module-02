@@ -1,4 +1,5 @@
 #include "Form.hpp"
+#include "Bureaucrat.hpp"
 
 Form::Form():_Name("Defautl"), _Signed(false), _Grade_sign(150), _Sign_execute(150){
     std::cout << "Default constructor Form is called" << std::endl;
@@ -36,4 +37,37 @@ const char* Form::GradeTooHighException::what() const throw(){
 const char* Form::GradeTooLowException::what() const throw(){
     return "Grade To Low\n";
 }
+
+void    Form::beSigned(Bureaucrat& man){
+    if(man.getGrade() <= this->_Grade_sign){
+        this->_Signed = true;
+    }
+    else
+        throw  GradeTooLowException();
+}
+
+const std::string& Form::getName() const {
+    return _Name;
+}
+
+bool Form::getSigned() const {
+    return _Signed;
+}
+
+int Form::getGradeToSign() const {
+    return _Grade_sign;
+}
+
+int Form::getGradeToExecute() const {
+    return _Sign_execute;
+}
+
+std::ostream& operator<<(std::ostream& os, const Form& other){
+    os  << "Name of Form : " << other.getName() << std::endl
+        << "Form is signed : " <<other.getSigned() << std::endl
+        << "Grade to sign : " << other.getGradeToSign() << std::endl
+        << "Grade to execute : " << other.getGradeToExecute() << std::endl;
+    return os;
+}
+
 
