@@ -1,6 +1,25 @@
 #include "Intern.hpp"
 
 
+Intern::Intern(){
+    std::cout << "Default constructor Intern is called" << std::endl;
+}
+
+Intern::Intern(const Intern& other){
+    std::cout << "the constructor overloded Intern is called" << std::endl;
+}
+
+Intern&  Intern::operator=(const Intern& other){
+    std::cout << "Copy assignment operator Intern is called" << std::endl;
+    return *this;
+}
+
+Intern::~Intern(){
+    std::cout << "Destructor Intern is called" << std::endl;
+}
+
+
+
 static AForm* makeShrubbery(std::string target) {
     return new ShrubberyCreationForm(target);
 }
@@ -25,7 +44,7 @@ AForm* Intern::makeForm(std::string name_form, std::string target){
         "presidential pardon"
     };
 
-    AForm* (*creat_form[])(std::string target) ={
+    AForm* (*creat_form[])(std::string target){
         &makeShrubbery,
         &makeRobotomy,
         &makePresidential
@@ -33,7 +52,7 @@ AForm* Intern::makeForm(std::string name_form, std::string target){
 
     for (size_t i = 0; i < 3; i++)
     {
-        if(posibel_forms[i] == target){
+        if(posibel_forms[i] == name_form){
             std::cout << "Intern creates " << target << std::endl;
             return (creat_form[i](target));
         }
