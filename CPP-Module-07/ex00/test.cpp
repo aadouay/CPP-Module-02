@@ -29,6 +29,61 @@ bool isChar(const std::string &s)
     return false;
 }
 
+bool isDoubel(const std::string &s){
+
+    int count = 0;
+    double number = 0;
+    // check if we have valid format . &&  numbers !!
+
+    for (size_t i = 0; s[i] != '\0'; i++)
+    {
+        if(!(s[i] == '.' || (s[i] >= '0' && s[i] <= '9')))
+            return false;
+    }
+    
+    // check how many dots exits !!
+    for (size_t i = 0; s[i] != '\0'; i++)
+    {
+        if(s[i] == '.')
+            count++;
+    }
+    if(count != 1)
+        return false;
+    if(s[0] == '.' || s[s.length() - 1] == '.')
+        return false;
+    return true;
+}
+
+bool isFloat(const std::string &s){
+    int count = 0;
+    double number = 0;
+    // check if we have valid format . & f & numbers !!
+
+    for (size_t i = 0; s[i] != '\0'; i++)
+    {
+        if(!(s[i] == '.' || s[i] == 'f' || (s[i] >= '0' && s[i] <= '9')))
+            return false;
+    }
+    
+    // check how many dots exits !!
+    for (size_t i = 0; s[i] != '\0'; i++)
+    {
+        if(s[i] == '.')
+            count++;
+    }
+    if(count != 1)
+        return false;
+    if(s[0] == '.' || s[s.length() - 1] == '.')
+        return false;
+    //check valid pos of f character !
+    for (size_t i = 0; i < (s.length() - 1); i++){
+        if(s[i] == 'f')
+            return false;
+    }
+    
+    return true;
+}
+
 e_type detect_type(std::string str) {
 
     if(str.empty())
@@ -37,12 +92,23 @@ e_type detect_type(std::string str) {
         return INT;
     if(isChar(str))
         return CHAR;
-
-    // check if type is doubel !
-    // check if type is float !
+    if(isDoubel(str))
+        return DOUBLE;
+   if(isFloat(str))
+        return FLOAT;
     return INVALID;
 }
 
+
+void    convert_the_string(std::string str, e_type type){
+
+    if(type == INVALID){
+        std::cout << "char : impossible" << std::endl;
+        std::cout << "int : impossible" << std::endl;
+        std::cout << "float : impossible" << std::endl;
+        std::cout << "doubel : impossible" << std::endl;
+    }
+}
 // then if we have invalid we should return imposible in all types !
 // if type is valid we should return ech type withe her casting using static cast !
 
@@ -56,6 +122,10 @@ int main(int ac, char **av){
         std::cout << "INT"<< std::endl;
     else if(detect_type(av[1]) == CHAR)
         std::cout << "CHAR"<< std::endl;
+    else if(detect_type(av[1]) == DOUBLE)
+        std::cout << "DOUBLE" << std::endl;
+    else if(detect_type(av[1]) == FLOAT)
+        std::cout << "FLOAT" << std::endl;
     else
         std::cout << "ikhan" << std::endl;
 }
