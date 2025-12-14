@@ -22,11 +22,12 @@ bool isInt(const std::string &s) {
 
 bool isChar(const std::string &s)
 {
-    if(s.length() != 1)
+    if(s.length() != 3)
         return false;
-    if(std::isprint(static_cast <int> (s[0])) && !std::isdigit(static_cast <int> (s[0])))
-        return true;
-    return false;
+    if(!(s[0] == '\'' && s[2] == '\''))
+        return false;
+        
+    return true;
 }
 
 bool isDoubel(const std::string &s){
@@ -80,7 +81,6 @@ bool isFloat(const std::string &s){
         if(s[i] == 'f')
             return false;
     }
-    
     return true;
 }
 
