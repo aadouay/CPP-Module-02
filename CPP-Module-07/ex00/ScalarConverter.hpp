@@ -28,7 +28,7 @@ class ScalarConverter{
         ~ScalarConverter();
         static void convert(const std::string &literal);
         static void convertFromChar(char c);
-        static void convertFromInt(int i);
+        static void convertFromInt(double i);
         static void convertFromFloat(float f);
         static void convertFromDouble(double d);
         static void convertFromSpecial(const std::string &s);

@@ -21,11 +21,11 @@ void    ScalarConverter::convertFromChar(char c){
     else
         std::cout << "char : Non displayable" << std::endl;
     std::cout << "int : " << static_cast<int>(c) << std::endl;
-    std::cout << "float : " << static_cast<float>(c) << ".0f" << std::endl;
-    std::cout << "double : " << static_cast<double>(c) << ".0" << std::endl;
+    std::cout << "float : " << static_cast<float>(c) << std::endl;
+    std::cout << "double : " << static_cast<double>(c) << std::endl;
 }
 
-void    ScalarConverter::convertFromInt(int i){
+void    ScalarConverter::convertFromInt(double i){
 
     if(i >= 0 && i <= 127 && std::isprint(static_cast<char>(i)))
         std::cout << "char : '" << static_cast<char>(i) << "'" << std::endl;
@@ -33,9 +33,12 @@ void    ScalarConverter::convertFromInt(int i){
         std::cout << "char : Non displayable" << std::endl;
     else
         std::cout << "char : impossible" << std::endl;
-    std::cout << "int : " << i << std::endl;
-    std::cout << "float : " << static_cast<float>(i) << ".0f" << std::endl;
-    std::cout << "double : " << static_cast<double>(i) << ".0" << std::endl;
+    if(i >= int_min && i <= int_max)
+        std::cout << "int : " << static_cast<int>(i) << std::endl;
+    else
+        std::cout << "int : impossible" << std::endl;
+    std::cout << "float : " << static_cast<float>(i) << std::endl;
+    std::cout << "double : " << static_cast<double>(i) << std::endl;
 }
 
 void    ScalarConverter::convertFromFloat(float f){
@@ -46,12 +49,12 @@ void    ScalarConverter::convertFromFloat(float f){
         std::cout << "char : Non displayable" << std::endl;
     else
         std::cout << "char : impossible" << std::endl;
-    if(f >= float_min && f <= float_max)
+    if(static_cast<int>(f) >= int_min && static_cast<int>(f) <= int_max)
         std::cout << "int : " << static_cast<int>(f) << std::endl;
     else
         std::cout << "int : impossible" << std::endl;
-    std::cout << "float : " << f << ".0f" << std::endl;
-    std::cout << "double : " << static_cast<double>(f) << ".0" << std::endl;
+    std::cout << "float : " << f << "f" << std::endl;
+    std::cout << "double : " << static_cast<double>(f) << std::endl;
 }
 
 void    ScalarConverter::convertFromDouble(double d){
@@ -62,15 +65,15 @@ void    ScalarConverter::convertFromDouble(double d){
         std::cout << "char : Non displayable" << std::endl;
     else
         std::cout << "char : impossible" << std::endl;
-    if(d >= int_min && d <= int_max)
+    if(static_cast<int>(d) >= int_min && static_cast<int>(d) <= int_max)
         std::cout << "int : " << static_cast<int>(d) << std::endl;
     else
         std::cout << "int : impossible" << std::endl;
     if(d >= -float_max && d <= float_max)
-        std::cout << "float : " << static_cast<float>(d) << ".0f" << std::endl;
+        std::cout << "float : " << static_cast<float>(d) << std::endl;
     else
         std::cout << "float : impossible" << std::endl;
-    std::cout << "double : " << d << ".0" << std::endl;
+    std::cout << "double : " << d << std::endl;
 }
 
 void    ScalarConverter::convertFromSpecial(const std::string &s){
@@ -201,13 +204,13 @@ void    convert_the_string(std::string str, e_type type){
             ScalarConverter::convertFromChar(str.c_str()[1]);
             break;
         case INT:
-            ScalarConverter::convertFromInt(std::atoi(str.c_str()));
+            ScalarConverter::convertFromInt(std::strtod(str.c_str(), NULL));
             break;
         case FLOAT:
-            ScalarConverter::convertFromFloat(std::atof(str.c_str()));
+            ScalarConverter::convertFromFloat(std::strtod(str.c_str(), NULL));
             break;
         case DOUBLE:
-            ScalarConverter::convertFromDouble(std::atof(str.c_str()));
+            ScalarConverter::convertFromDouble(std::strtod(str.c_str(), NULL));
             break;
         case SPECIAL:
             ScalarConverter::convertFromSpecial(str);
