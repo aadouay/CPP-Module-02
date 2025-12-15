@@ -38,11 +38,16 @@ bool isDoubel(const std::string &s){
 
     for (size_t i = 0; s[i] != '\0'; i++)
     {
-        if(!(s[i] == '.' || (s[i] >= '0' && s[i] <= '9')))
+        if(!(s[i] == '.'  || s[i] == '-' || s[i] == '+' || (s[i] >= '0' && s[i] <= '9')))
             return false;
     }
-    
+
+    for (size_t i = 1; i < s.length(); i++){
+        if(s[i] == '-' || s[i] == '+')
+            return false;
+    }
     // check how many dots exits !!
+    int i = 0;
     for (size_t i = 0; s[i] != '\0'; i++)
     {
         if(s[i] == '.')
@@ -62,10 +67,14 @@ bool isFloat(const std::string &s){
 
     for (size_t i = 0; s[i] != '\0'; i++)
     {
-        if(!(s[i] == '.' || s[i] == 'f' || (s[i] >= '0' && s[i] <= '9')))
+        if(!(s[i] == '.' || s[i] == 'f' || s[i] == '-' || s[i] == '+'|| (s[i] >= '0' && s[i] <= '9')))
             return false;
     }
     
+    for (size_t i = 1; i < s.length(); i++){
+        if(s[i] == '-' || s[i] == '+')
+            return false;
+    }
     // check how many dots exits !!
     for (size_t i = 0; s[i] != '\0'; i++)
     {
@@ -84,10 +93,14 @@ bool isFloat(const std::string &s){
     return true;
 }
 
+bool isSpecial(const std::string &s) {
+    if (s == "nan" || s == "nanf" || s == "+inf" || s == "+inff" || s == "-inf" || s == "-inff")
+        return true;
+    return false;
+}
+
 e_type detect_type(std::string str) {
 
-    if(str.empty())
-        return INVALID;
     if(isInt(str))
         return INT;
     if(isChar(str))
@@ -96,6 +109,8 @@ e_type detect_type(std::string str) {
         return DOUBLE;
    if(isFloat(str))
         return FLOAT;
+    if(isSpecial(str))
+        return SPECIAL;
     return INVALID;
 }
 
