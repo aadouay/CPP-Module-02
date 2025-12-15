@@ -141,6 +141,8 @@ int main(int ac, char **av){
         std::cout << "DOUBLE" << std::endl;
     else if(detect_type(av[1]) == FLOAT)
         std::cout << "FLOAT" << std::endl;
+    else if(detect_type(av[1]) == SPECIAL)
+        std::cout << "SPECIAL" << std::endl;
     else
         std::cout << "ikhan" << std::endl;
 }

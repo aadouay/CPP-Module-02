@@ -4,7 +4,7 @@ FLAGS   = -std=c++98 -Wall -Wextra -Werror
 RM      = rm -rf
 
 
-SRC  = main.cpp Bureaucrat.cpp
+SRC  = main.cpp ScalarConverter.cpp
 OBJ     = $(SRC:.cpp=.o)
 
 all: $(NAME)
