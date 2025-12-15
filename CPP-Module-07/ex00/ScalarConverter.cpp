@@ -37,9 +37,17 @@ void    ScalarConverter::convertFromInt(double i){
         std::cout << "int : " << static_cast<int>(i) << std::endl;
     else
         std::cout << "int : impossible" << std::endl;
-    std::cout << "float : " << static_cast<float>(i) << std::endl;
-    std::cout << "double : " << static_cast<double>(i) << std::endl;
+    if(i - static_cast<int>(i) == 0.0f)
+        std::cout << "float : " << static_cast<float>(i) << ".0f" << std::endl;
+    else
+        std::cout << "float : " << static_cast<float>(i) << "f" << std::endl;
+    // don't  forget handle ouverflow for double & float here
+    if(i - static_cast<int>(i) == 0.0f)
+        std::cout << "double : " << static_cast<double>(i) << ".0" << std::endl;
+    else
+        std::cout << "double : " << static_cast<double>(i) << std::endl;
 }
+
 
 void    ScalarConverter::convertFromFloat(float f){
 
@@ -53,8 +61,16 @@ void    ScalarConverter::convertFromFloat(float f){
         std::cout << "int : " << static_cast<int>(f) << std::endl;
     else
         std::cout << "int : impossible" << std::endl;
-    std::cout << "float : " << f << "f" << std::endl;
-    std::cout << "double : " << static_cast<double>(f) << std::endl;
+    // don't  forget handle ouverflow for double & float here
+    if(f - static_cast<int>(f) == 0.0f)
+        std::cout << "float : " << f << ".0f" << std::endl;
+    else
+        std::cout << "float : " << f << "f" << std::endl;
+    // don't  forget handle ouverflow for double & float here
+    if(f - static_cast<int>(f) == 0.0)
+        std::cout << "double : " << static_cast<double>(f) << ".0" << std::endl;
+    else
+        std::cout << "double : " << static_cast<double>(f) << std::endl;
 }
 
 void    ScalarConverter::convertFromDouble(double d){
@@ -69,11 +85,17 @@ void    ScalarConverter::convertFromDouble(double d){
         std::cout << "int : " << static_cast<int>(d) << std::endl;
     else
         std::cout << "int : impossible" << std::endl;
-    if(d >= -float_max && d <= float_max)
-        std::cout << "float : " << static_cast<float>(d) << std::endl;
+    // don't  forget handle ouverflow for double & float here
+
+    if(d - static_cast<int>(d) == 0.0f)
+        std::cout << "float : " << static_cast<float>(d) << ".0f" << std::endl;
     else
-        std::cout << "float : impossible" << std::endl;
-    std::cout << "double : " << d << std::endl;
+        std::cout << "float : " << static_cast<float>(d) << "f" << std::endl;
+    // don't  forget handle ouverflow for double & float here
+    if(d - static_cast<int>(d) == 0.0)
+        std::cout << "double : " << d << ".0" << std::endl;
+    else
+        std::cout << "double : " << d << std::endl;
 }
 
 void    ScalarConverter::convertFromSpecial(const std::string &s){
