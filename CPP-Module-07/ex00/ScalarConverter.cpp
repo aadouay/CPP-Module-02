@@ -21,8 +21,14 @@ void    ScalarConverter::convertFromChar(char c){
     else
         std::cout << "char : Non displayable" << std::endl;
     std::cout << "int : " << static_cast<int>(c) << std::endl;
-    std::cout << "float : " << static_cast<float>(c) << std::endl;
-    std::cout << "double : " << static_cast<double>(c) << std::endl;
+    if(c - static_cast<int>(c) == 0.0f)
+        std::cout << "float : " << static_cast<float>(c) << ".0f" << std::endl;
+    else
+        std::cout << "float : " << static_cast<float>(c) << "f" << std::endl;
+    if(c - static_cast<int>(c) == 0.0)
+        std::cout << "double : " << static_cast<double>(c) << ".0" << std::endl;
+    else
+        std::cout << "double : " << static_cast<double>(c) << std::endl;
 }
 
 void    ScalarConverter::convertFromInt(double i){
@@ -42,7 +48,7 @@ void    ScalarConverter::convertFromInt(double i){
     else
         std::cout << "float : " << static_cast<float>(i) << "f" << std::endl;
     // don't  forget handle ouverflow for double & float here
-    if(i - static_cast<int>(i) == 0.0f)
+    if(i - static_cast<int>(i) == 0.0)
         std::cout << "double : " << static_cast<double>(i) << ".0" << std::endl;
     else
         std::cout << "double : " << static_cast<double>(i) << std::endl;
@@ -188,12 +194,18 @@ bool isFloat(const std::string &s){
     }
     if(count != 1)
         return false;
-    if(s[0] == '.' || s[s.length() - 1] == '.')
+    if(s[s.length() - 1] == '.')
         return false;
     //check valid pos of f character !
+    float a = 445445565654454.f;
     for (size_t i = 0; i < (s.length() - 1); i++){
         if(s[i] == 'f')
             return false;
+    }
+    // special case .f
+    for(size_t i = 0; i < s.length(); i++){
+        if(s[i] == '.' && s[i + 1] == 'f' && s[i +  2] == '\0')
+            return true;
     }
     return true;
 }
