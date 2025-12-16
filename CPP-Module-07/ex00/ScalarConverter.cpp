@@ -197,7 +197,6 @@ bool isFloat(const std::string &s){
     if(s[s.length() - 1] == '.')
         return false;
     //check valid pos of f character !
-    float a = 445445565654454.f;
     for (size_t i = 0; i < (s.length() - 1); i++){
         if(s[i] == 'f')
             return false;
