@@ -39,7 +39,7 @@ void    ScalarConverter::convertFromInt(double i){
         std::cout << "char : Non displayable" << std::endl;
     else
         std::cout << "char : impossible" << std::endl;
-    if(i >= int_min && i <= int_max)
+    if(i >= static_cast<double>(int_min) && i <= static_cast<double>(int_max))
         std::cout << "int : " << static_cast<int>(i) << std::endl;
     else
         std::cout << "int : impossible" << std::endl;
@@ -63,7 +63,7 @@ void    ScalarConverter::convertFromFloat(float f){
         std::cout << "char : Non displayable" << std::endl;
     else
         std::cout << "char : impossible" << std::endl;
-    if(static_cast<int>(f) >= int_min && static_cast<int>(f) <= int_max)
+    if(f >= static_cast<float>(int_min) && f <= static_cast<float>(int_max))
         std::cout << "int : " << static_cast<int>(f) << std::endl;
     else
         std::cout << "int : impossible" << std::endl;
@@ -87,7 +87,7 @@ void    ScalarConverter::convertFromDouble(double d){
         std::cout << "char : Non displayable" << std::endl;
     else
         std::cout << "char : impossible" << std::endl;
-    if(static_cast<int>(d) >= int_min && static_cast<int>(d) <= int_max)
+    if(d >= static_cast<double>(int_min) && d <= static_cast<double>(int_max))
         std::cout << "int : " << static_cast<int>(d) << std::endl;
     else
         std::cout << "int : impossible" << std::endl;
