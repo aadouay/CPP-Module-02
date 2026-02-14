@@ -6,39 +6,69 @@
 #include <cstdlib> 
 #include <ctime>
 
-
-// generate object !
-
 Base * generate(void){
-    Base *obj;
-    switch (rand() % 3)
+    int rdm = (rand() % 3);
+    if(rdm == 0) return new A;
+    if(rdm == 1) return new B;
+    return new C;
+}
+
+void identify(Base* p){
+    if(dynamic_cast <A*> (p) != nullptr)
+        std::cout << "This object is come from Class A" << std::endl;
+        
+    else if (dynamic_cast <B*> (p) != nullptr)
+        std::cout << "This object is come from Class B" << std::endl;
+        
+    else if(dynamic_cast <C*> (p) != nullptr)
+        std::cout << "This object is come from Class C" << std::endl;
+    else
+        std::cout << "Unknown type" << std::endl;
+}
+void identify(Base& p){
+
+    try
     {
-        case 0:
-            obj = new A;
-            break;
-        case 1:
-            obj = new B;
-            break;
-        case 2:
-            obj = new C;
+        A& add = dynamic_cast <A&> (p);
+        (void)add;
+        std::cout << "This object is come from Class A" << std::endl;
+        return ;
     }
-    return obj;
+    catch(const std::bad_cast&){}
+
+    try
+    {
+        B& add = dynamic_cast <B&> (p);
+        (void)add;
+        std::cout << "This object is come from Class B" << std::endl;
+        return ;
+    }
+    catch(const std::bad_cast&){}
+
+    try
+    {
+        C& add = dynamic_cast <C&> (p);
+        (void)add;
+        std::cout << "This object is come from Class C" << std::endl;
+        return ;
+    }
+    catch(const std::bad_cast&){
+        std::cout << "Unknown type" << std::endl;
+    }
 }
 
 int main(){
     std::srand(std::time(NULL));
 
-    Base *add = generate();
-    A *type = dynamic_cast<A *> (add);
-    B *type2 = dynamic_cast<B *> (add);
-    C *type3 = dynamic_cast<C *> (add);
-    if(type != nullptr){
-        std::cout << "the onject is A" << std::endl;
+    {
+        Base *add = generate();
+        identify(add);
+        delete add;
     }
-    if(type2 != nullptr){
-        std::cout << "the onject is B" << std::endl;
-    }
-    if(type3 != nullptr){
-        std::cout << "the onject is C" << std::endl;
+    
+    {
+        Base *add = generate();
+        identify(*add);
+        delete add;
     }
 }
