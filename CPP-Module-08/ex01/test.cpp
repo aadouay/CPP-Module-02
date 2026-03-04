@@ -9,6 +9,5 @@ int add(int value){return value + value;}
 int main() {
     int note = 25;
     applique(note, add);
-    std::cout << note << std::endl;
-    
+    std::cout << note << std::endl;   
 }

@@ -14,6 +14,36 @@
 // std::string...) quand je l'utiliserai." Cela permet d'écrire le code une
 // seule fois, et de l'utiliser avec n'importe quel type !
 
+
+
+// rapelle le concept de const en nos objects !!
+// Le const à la fin : La promesse de l'objet 
+//... operator[](unsigned int index) const
+/*
+  C'est ce qu'on appelle une méthode constante.
+
+  Le rôle : Ce const dit au compilateur : "Je promets que cette fonction ne modifiera
+  aucun attribut de la classe (elle ne touchera ni à _data, ni à _size)".
+
+  Pourquoi c'est vital ? En C++, si tu as un objet constant (ex: const Array<int> myTab(5);),
+  tu ne peux appeler sur lui que des méthodes qui finissent par const. Sans ce const à la fin,
+  tu ne pourrais même pas lire le contenu d'un tableau constant !
+*/
+
+// Le const au début : La protection de la donnée
+// const T & ...
+
+/*
+  Ici, on parle de ce que la fonction renvoie.
+
+  Le rôle : La fonction renvoie une référence vers l'élément dans le tableau,
+  mais elle y ajoute un verrou "lecture seule".
+
+  L'effet : Si tu écris myTab[0] = 42; avec cette version de l'opérateur,
+  le compilateur dira : "Impossible ! Tu essaies de modifier une valeur qui est protégée par un const."
+
+*/
+
 template <typename T> class Array {
 private:
   T *array;
