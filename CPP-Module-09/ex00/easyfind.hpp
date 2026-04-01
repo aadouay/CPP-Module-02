@@ -1,12 +1,14 @@
 #pragma once
 #include <iostream>
+#include <vector>
 
 template<typename T>
 
-T   easyfind(T data, int value){
+typename T::iterator   easyfind(T& data, int value){
 
-    for (data::iterator it = data.begin(); it != data.end() ; ++it){
+    for (typename T::iterator it = data.begin(); it != data.end() ; ++it){
         if(*it == value)
-            return *it;
+            return it;
     }
+    throw std::runtime_error("Value not found");
 }

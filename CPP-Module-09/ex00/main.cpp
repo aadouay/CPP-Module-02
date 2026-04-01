@@ -1,6 +1,20 @@
 #include <iostream>
-#include <victor>
+#include "easyfind.hpp"
+
 int main(){
 
-    victor <int> data =
+    std::vector <int> data;
+    data.push_back(12);
+    data.push_back(132);
+    data.push_back(376);
+    data.push_back(8);
+
+    try
+    {
+        std::vector <int>::iterator it = easyfind(data, 132);
+        std::cout << "Find : " << *it << std::endl;
+    }
+    catch(const std::exception& e){
+        std::cerr << e.what() << '\n';
+    }
 }
