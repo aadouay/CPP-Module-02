@@ -19,7 +19,7 @@ Span	&Span::operator=( const Span &Other ) {
 }
 
 Span::~Span(){
-    std::cout << "la block a etais suprimier !" << std::endl;
+    std::cout << "Span détruit et mémoire libérée." << std::endl;
 }
 
 void    Span::addNumber(int value){
@@ -28,7 +28,7 @@ void    Span::addNumber(int value){
         _data.push_back(value);
     }
     else
-        throw std::runtime_error("t'auras dépasser la limit de bloc !");
+        throw std::runtime_error("Exception : Capacité maximale dépassée.");
 }
 
 void    Span::print_la_block(){
@@ -39,15 +39,17 @@ void    Span::print_la_block(){
 
 int    Span::longestSpan(){
 
-    if(_maxsize < 2)
-        throw std::runtime_error("Nombre insuffisant pour trouver une Span");
+    if(_data.size() < 2)
+        throw std::runtime_error("Erreur : Nombre d'éléments insuffisant pour calculer un écart.");
     
     std::vector<int>::iterator min = std::min_element(_data.begin(), _data.end());
     std::vector<int>::iterator max = std::max_element(_data.begin(), _data.end());
-    return (max - min);
+    return (*max - *min);
 }
 
 int Span::shortestSpan(){
+    if(_data.size() < 2)
+        throw std::runtime_error("Erreur : Nombre d'éléments insuffisant pour calculer un écart.");
     std::vector<int> tabel = _data;
     std::vector<int> destance;
     std::sort(tabel.begin(), tabel.end());
