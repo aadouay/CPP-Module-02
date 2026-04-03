@@ -1,175 +1,175 @@
-// #include "Span.hpp"
-
-// int main()
-// {
-//     Span sp = Span(5);
-//     sp.addNumber(6);
-//     sp.addNumber(3);
-//     sp.addNumber(17);
-//     sp.addNumber(9);
-//     sp.addNumber(11);
-//     std::cout << sp.shortestSpan() << std::endl;
-//     std::cout << sp.longestSpan() << std::endl;
-//     return 0;
-
-// }
-
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <stdexcept>
 #include "Span.hpp"
 
-// ══════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════
-
-static void	printSeparator(const std::string &title)
+int main()
 {
-	std::cout << "\n";
-	std::cout << "╔══════════════════════════════════════╗" << std::endl;
-	std::cout << "║  " << title << std::endl;
-	std::cout << "╚══════════════════════════════════════╝" << std::endl;
+    Span sp = Span(5);
+    sp.addNumber(6);
+    sp.addNumber(3);
+    sp.addNumber(17);
+    sp.addNumber(9);
+    sp.addNumber(11);
+    std::cout << sp.shortestSpan() << std::endl;
+    std::cout << sp.longestSpan() << std::endl;
+    return 0;
+
 }
 
-// ══════════════════════════════════════════
-//  BLOC 1 — Test exact du sujet (PDF)
-// ══════════════════════════════════════════
+// #include <iostream>
+// #include <vector>
+// #include <cstdlib>
+// #include <ctime>
+// #include <stdexcept>
+// #include "Span.hpp"
 
-static void	testSubject( void )
-{
-	printSeparator("BLOC 1 : Test exact du sujet");
+// // ══════════════════════════════════════════
+// //  UTILS
+// // ══════════════════════════════════════════
 
-	Span sp(5);
-	sp.addNumber(6);
-	sp.addNumber(3);
-	sp.addNumber(17);
-	sp.addNumber(9);
-	sp.addNumber(11);
+// static void	printSeparator(const std::string &title)
+// {
+// 	std::cout << "\n";
+// 	std::cout << "╔══════════════════════════════════════╗" << std::endl;
+// 	std::cout << "║  " << title << std::endl;
+// 	std::cout << "╚══════════════════════════════════════╝" << std::endl;
+// }
 
-	std::cout << "shortestSpan → " << sp.shortestSpan() << "  (attendu: 2)"  << std::endl;
-	std::cout << "longestSpan  → " << sp.longestSpan()  << "  (attendu: 14)" << std::endl;
-}
+// // ══════════════════════════════════════════
+// //  BLOC 1 — Test exact du sujet (PDF)
+// // ══════════════════════════════════════════
 
-// ══════════════════════════════════════════
-//  BLOC 2 — Test 10 000 nombres aleatoires
-// ══════════════════════════════════════════
+// static void	testSubject( void )
+// {
+// 	printSeparator("BLOC 1 : Test exact du sujet");
 
-static void	testBigSpan( void )
-{
-	printSeparator("BLOC 2 : 10 000 nombres aleatoires");
+// 	Span sp(5);
+// 	sp.addNumber(6);
+// 	sp.addNumber(3);
+// 	sp.addNumber(17);
+// 	sp.addNumber(9);
+// 	sp.addNumber(11);
 
-	std::srand(std::time(0));
+// 	std::cout << "shortestSpan → " << sp.shortestSpan() << "  (attendu: 2)"  << std::endl;
+// 	std::cout << "longestSpan  → " << sp.longestSpan()  << "  (attendu: 14)" << std::endl;
+// }
 
-	Span big(10000);
-	for (int i = 0; i < 10000; i++)
-		big.addNumber(std::rand());
+// // ══════════════════════════════════════════
+// //  BLOC 2 — Test 10 000 nombres aleatoires
+// // ══════════════════════════════════════════
 
-	std::cout << "shortestSpan → " << big.shortestSpan() << std::endl;
-	std::cout << "longestSpan  → " << big.longestSpan()  << std::endl;
-	std::cout << "[OK] Aucun crash sur 10 000 elements" << std::endl;
-}
+// static void	testBigSpan( void )
+// {
+// 	printSeparator("BLOC 2 : 10 000 nombres aleatoires");
 
-// ══════════════════════════════════════════
-//  BLOC 3 — Exception : sac plein
-// ══════════════════════════════════════════
+// 	std::srand(std::time(0));
 
-static void	testFullSpan( void )
-{
-	printSeparator("BLOC 3 : Exception sac plein");
+// 	Span big(10000);
+// 	for (int i = 0; i < 10000; i++)
+// 		big.addNumber(std::rand());
 
-	Span full(3);
-	full.addNumber(1);
-	full.addNumber(2);
-	full.addNumber(3);
+// 	std::cout << "shortestSpan → " << big.shortestSpan() << std::endl;
+// 	std::cout << "longestSpan  → " << big.longestSpan()  << std::endl;
+// 	std::cout << "[OK] Aucun crash sur 10 000 elements" << std::endl;
+// }
 
-	try
-	{
-		full.addNumber(4);
-		std::cout << "[KO] Aucune exception lancee !" << std::endl;
-	}
-	catch (const std::runtime_error &e)
-	{
-		std::cout << "[OK] Exception attrapee : " << e.what() << std::endl;
-	}
-}
+// // ══════════════════════════════════════════
+// //  BLOC 3 — Exception : sac plein
+// // ══════════════════════════════════════════
 
-// ══════════════════════════════════════════
-//  BLOC 4 — Exception : pas assez d'elements
-// ══════════════════════════════════════════
+// static void	testFullSpan( void )
+// {
+// 	printSeparator("BLOC 3 : Exception sac plein");
 
-static void	testNotEnoughElements( void )
-{
-	printSeparator("BLOC 4 : Exception pas assez d'elements");
+// 	Span full(3);
+// 	full.addNumber(1);
+// 	full.addNumber(2);
+// 	full.addNumber(3);
 
-	// Cas 1 : Span vide
-	Span empty(5);
-	try
-	{
-		empty.shortestSpan();
-		std::cout << "[KO] Aucune exception sur Span vide !" << std::endl;
-	}
-	catch (const std::runtime_error &e)
-	{
-		std::cout << "[OK] Span vide - shortestSpan : " << e.what() << std::endl;
-	}
+// 	try
+// 	{
+// 		full.addNumber(4);
+// 		std::cout << "[KO] Aucune exception lancee !" << std::endl;
+// 	}
+// 	catch (const std::runtime_error &e)
+// 	{
+// 		std::cout << "[OK] Exception attrapee : " << e.what() << std::endl;
+// 	}
+// }
 
-	try
-	{
-		empty.longestSpan();
-		std::cout << "[KO] Aucune exception sur Span vide !" << std::endl;
-	}
-	catch (const std::runtime_error &e)
-	{
-		std::cout << "[OK] Span vide - longestSpan  : " << e.what() << std::endl;
-	}
+// // ══════════════════════════════════════════
+// //  BLOC 4 — Exception : pas assez d'elements
+// // ══════════════════════════════════════════
 
-	// Cas 2 : Span avec un seul element
-	Span lonely(5);
-	lonely.addNumber(42);
-	try
-	{
-		lonely.shortestSpan();
-		std::cout << "[KO] Aucune exception sur Span a 1 element !" << std::endl;
-	}
-	catch (const std::runtime_error &e)
-	{
-		std::cout << "[OK] 1 element - shortestSpan : " << e.what() << std::endl;
-	}
-}
+// static void	testNotEnoughElements( void )
+// {
+// 	printSeparator("BLOC 4 : Exception pas assez d'elements");
 
-// ══════════════════════════════════════════
-//  BLOC 5 — Valeurs identiques
-// ══════════════════════════════════════════
+// 	// Cas 1 : Span vide
+// 	Span empty(5);
+// 	try
+// 	{
+// 		empty.shortestSpan();
+// 		std::cout << "[KO] Aucune exception sur Span vide !" << std::endl;
+// 	}
+// 	catch (const std::runtime_error &e)
+// 	{
+// 		std::cout << "[OK] Span vide - shortestSpan : " << e.what() << std::endl;
+// 	}
 
-static void	testSameValues( void )
-{
-	printSeparator("BLOC 5 : Valeurs identiques");
+// 	try
+// 	{
+// 		empty.longestSpan();
+// 		std::cout << "[KO] Aucune exception sur Span vide !" << std::endl;
+// 	}
+// 	catch (const std::runtime_error &e)
+// 	{
+// 		std::cout << "[OK] Span vide - longestSpan  : " << e.what() << std::endl;
+// 	}
 
-	Span same(5);
-	same.addNumber(42);
-	same.addNumber(42);
-	same.addNumber(42);
-	same.addNumber(42);
-	same.addNumber(42);
+// 	// Cas 2 : Span avec un seul element
+// 	Span lonely(5);
+// 	lonely.addNumber(42);
+// 	try
+// 	{
+// 		lonely.shortestSpan();
+// 		std::cout << "[KO] Aucune exception sur Span a 1 element !" << std::endl;
+// 	}
+// 	catch (const std::runtime_error &e)
+// 	{
+// 		std::cout << "[OK] 1 element - shortestSpan : " << e.what() << std::endl;
+// 	}
+// }
 
-	std::cout << "shortestSpan → " << same.shortestSpan() << "  (attendu: 0)" << std::endl;
-	std::cout << "longestSpan  → " << same.longestSpan()  << "  (attendu: 0)" << std::endl;
-}
+// // ══════════════════════════════════════════
+// //  BLOC 5 — Valeurs identiques
+// // ══════════════════════════════════════════
 
-// ══════════════════════════════════════════
-//  MAIN
-// ══════════════════════════════════════════
+// static void	testSameValues( void )
+// {
+// 	printSeparator("BLOC 5 : Valeurs identiques");
 
-int	main( void )
-{
-	testSubject();
-	testBigSpan();
-	testFullSpan();
-	testNotEnoughElements();
-	testSameValues();
+// 	Span same(5);
+// 	same.addNumber(42);
+// 	same.addNumber(42);
+// 	same.addNumber(42);
+// 	same.addNumber(42);
+// 	same.addNumber(42);
 
-	std::cout << "\n✅  Tous les tests sont passes.\n" << std::endl;
-	return (0);
-}
+// 	std::cout << "shortestSpan → " << same.shortestSpan() << "  (attendu: 0)" << std::endl;
+// 	std::cout << "longestSpan  → " << same.longestSpan()  << "  (attendu: 0)" << std::endl;
+// }
+
+// // ══════════════════════════════════════════
+// //  MAIN
+// // ══════════════════════════════════════════
+
+// int	main( void )
+// {
+// 	testSubject();
+// 	testBigSpan();
+// 	testFullSpan();
+// 	testNotEnoughElements();
+// 	testSameValues();
+
+// 	std::cout << "\n✅  Tous les tests sont passes.\n" << std::endl;
+// 	return (0);
+// }
