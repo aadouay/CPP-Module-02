@@ -154,7 +154,7 @@ int shortestSpan_V3(std::vector<int> _vNumber)
     std::sort(sorted.begin(), sorted.end());
 
     // ETAPE 3 : Une seule variable pour le minimum
-    int minSpan = sorted[1] - sorted[0];          // ← JUSTE UN INT, pas un vecteur
+    int minSpan = sorted[1] - sorted[0];         // ← JUSTE UN INT, pas un vecteur
 
     // ETAPE 4 : Boucle simple sur les voisins — O(n)
     for (size_t i = 1; i < sorted.size(); i++)

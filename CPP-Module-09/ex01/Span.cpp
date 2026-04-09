@@ -52,14 +52,12 @@ int Span::shortestSpan(){
         throw std::runtime_error("Erreur : Nombre d'éléments insuffisant pour calculer un écart.");
     std::vector<int> tabel = _data;
     int deff;
-    // std::vector<int> destance;
-    // std::sort(tabel.begin(), tabel.end());
+    std::sort(tabel.begin(), tabel.end());
     int min_distance = tabel[1] - tabel[0];
-    for (size_t index = 1; index < _maxsize; index++){
+    for (size_t index = 1; index < tabel.size(); index++){
         deff = tabel[index] - tabel[index - 1];
         if(deff < min_distance)
             min_distance = deff;
     }
-
-    return(deff);
+    return(min_distance);
 }
