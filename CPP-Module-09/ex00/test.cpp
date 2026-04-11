@@ -2,17 +2,27 @@
 #include <vector>
 #include <deque>
 #include <stack>
+#include <list>
 
 
 
 int main() {
-    std::vector<int> v;
-    std::deque <int>(13);
-    std::stack<int, std::vector<int>> a(v);
-    std::cout << "Taille : " << v.size() << std::endl;         // Affiche 0
-    std::cout << "Capacité : " << v.capacity() << std::endl; // Affiche 0
-    if (v.data() == NULL) // .data() renvoie le pointeur vers le bloc interne
-        std::cout << "Le pointeur interne est NULL, aucune mémoire sur le tas !" << std::endl;
+    std::list<int> s;
+    s.push_back(25);
+    s.push_back(10);
+    s.push_back(15);
+    s.push_back(19);
 
-    return 0;
+
+    for(std::list<int>::iterator it = s.begin(); it != s.end(); ++it){
+        if(*it == 15)
+            std::cout << "find it : " << *it << std::endl;
+    }
+    std::deque<int> a;
+    a.push_back(25);
+    a.push_back(10);
+    a.push_back(15);
+    a.push_back(19);
+
+    std::cout << "dans un deque on put trouve les element via index : " << a[2] << std::endl;
 }
