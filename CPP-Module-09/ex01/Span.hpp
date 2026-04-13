@@ -18,14 +18,10 @@ class Span{
         // mumbers func !!
         void    addNumber(int value);
         template <typename Iterator>
-        void addRange(Iterator begin, Iterator end){
-            size_t elements = std::distance(begin, end);
-            size_t place_restante = _maxsize - _data.size();
-            if(elements > place_restante)
-                throw std::runtime_error("Exception : Capacité maximale dépassée");
-            _data.insert(_data.end(), begin, end);
-        }
+        void addRange(Iterator begin, Iterator end);
         void    print_la_block();
         int    shortestSpan();
         int    longestSpan();
 };
+
+#include "Span.tpp"
