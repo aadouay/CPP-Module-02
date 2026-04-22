@@ -108,7 +108,7 @@ float   BitcoinExchange::getRate(const std::string& date) const{
 // pour parocessinput  commencer par cette example "2011-01-03 | 15.3"
 
 void    BitcoinExchange::processInput(const std::string& filename){
-    std::ifstream file(filename);
+    std::ifstream file(filename.c_str());
     if(!file.is_open())
         throw std::runtime_error("Erorr : Impossible d'ouvrir le fichier");
 
