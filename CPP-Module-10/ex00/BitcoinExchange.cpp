@@ -53,7 +53,7 @@ bool BitcoinExchange::isValidDate(const std::string& date) const {
 }
 
 eError BitcoinExchange::isValidValue(const std::string& value, float& result) const {
-    // check decimal point 
+    //check decimal point 
     // int dicimal = 0;
     // int negatif = 0;
     // for (size_t i = 0; i < value.size(); i++){
@@ -63,20 +63,24 @@ eError BitcoinExchange::isValidValue(const std::string& value, float& result) co
     //         negatif++;
     // }
     // if(dicimal > 1)
-    //     return false;
+    //     return INVALID;
     // if(negatif != 0)
-    //     return false;
+    //     return INVALID;
     
-    // // faire un check pour string value pour verfier qui touts les caracters sont des numbres !!
+    // faire un check pour string value pour verfier qui touts les caracters sont des numbres !!
     // for(size_t i = 0; i < value.size(); i++){
-    //     if(!isdigit(value[i]) || value[i] != '.')
-    //         return false;
+    //     if(!isdigit(value[i]) && value[i] != '.' )
+    //         return INVALID;
     // }
+    // float number = std::atol()
 
+    // if(value.size() != 4) return INVALID;
     std::stringstream convert(value);
     float number;
-    if(!(convert >> number))
+    if (!(convert >> number) || !(convert >> std::ws).eof())
         return INVALID;
+    // if(!(convert >> number))
+    //     return INVALID;
     if (number < 0)
         return NEGATIVE;
     if(number > 1000)
@@ -109,6 +113,19 @@ float   BitcoinExchange::getRate(const std::string& date) const{
 
 // pour parocessinput  commencer par cette example "2011-01-03 | 15.3"
 
+void trim(std::string &s)
+{
+    size_t start = 0;
+    while (start < s.length() && std::isspace(s[start]))
+        start++;
+
+    size_t end = s.length();
+    while (end > start && std::isspace(s[end - 1]))
+        end--;
+
+    s = s.substr(start, end - start);
+}
+
 void    BitcoinExchange::processInput(const std::string& filename){
     std::ifstream file(filename.c_str());
     if(!file.is_open())
@@ -129,10 +146,6 @@ void    BitcoinExchange::processInput(const std::string& filename){
                 continue ;
             }
             eError check = isValidValue(value, resul);
-            // if(!isValidValue(value, resul)){
-            //     std::cerr << "Error: bad input => " << date << std::endl;
-            //     continue ;
-            // }
             if(check == INVALID){
                 std::cerr << "Error: bad input => " << value << std::endl;
                 continue ;  
@@ -150,8 +163,13 @@ void    BitcoinExchange::processInput(const std::string& filename){
             // faire un check si le data est plus ancien !!
             if(rate == -1.0f)
                 std::cerr << "Error: bad input => " << date << std::endl;
-            float final_result = (std::atoi(value.c_str()) * rate);
-            std::cout << date << "" << "=>" << "" << value << "" << " = " << final_result << std::endl;
+            // trim(value);
+            // trim(date);
+            std::stringstream convert(value);
+            float number;
+            convert >> number;
+            float final_result = (number * rate);
+            std::cout << date << "" << "=>" << " " << value << " = " << final_result << std::endl;
         }
         else
             std::cout << "Error: bad input => " << line << std::endl;
