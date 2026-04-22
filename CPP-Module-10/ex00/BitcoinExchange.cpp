@@ -25,11 +25,11 @@ void BitcoinExchange::loadDatabase(const std::string& filename){
 bool BitcoinExchange::isValidDate(const std::string& date) const {
 
     // faire un check pour le caracter "-" si trouve deux exactement !!
-
+    if (date.size() != 11) return false;
     if(date[4] != '-' || date[7] != '-')
         return false;
     // faire un check sur loop pour verfiee est ce que tout les alphabets est numerics !!
-
+    
     for (size_t i = 0; i < 10; i++)
     {
         if(i == 4 || i == 7) continue ;
@@ -41,7 +41,9 @@ bool BitcoinExchange::isValidDate(const std::string& date) const {
     // example : "2011-01-03"
     int annee = std::atoi(date.substr(0, 4).c_str());
     int mois = std::atoi(date.substr(5, 2).c_str());
-    int jour = std::atoi(date.substr(7, 2).c_str());
+    int jour = std::atoi(date.substr(8, 2).c_str());
+
+    // std::cout << "Le jour : " << jour << std::endl;
 
     if(mois < 1 || mois > 12)   return false;
     if(jour < 1 || jour > 31) return false;
@@ -149,7 +151,7 @@ void    BitcoinExchange::processInput(const std::string& filename){
             if(rate == -1.0f)
                 std::cerr << "Error: bad input => " << date << std::endl;
             float final_result = (std::atoi(value.c_str()) * rate);
-            std::cout << date << " " << "=>" << " " << value << " " << "=>" << final_result << std::endl;
+            std::cout << date << "" << "=>" << "" << value << "" << " = " << final_result << std::endl;
         }
         else
             std::cout << "Error: bad input => " << line << std::endl;
