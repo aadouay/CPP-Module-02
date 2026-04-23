@@ -24,8 +24,10 @@ void BitcoinExchange::loadDatabase(const std::string& filename){
 
 bool BitcoinExchange::isValidDate(const std::string& date) const {
 
-    // faire un check pour le caracter "-" si trouve deux exactement !!
+    // faire un check pour valid forme
     if (date.size() != 11) return false;
+    if(!isspace(date[date.size() - 1])) return false;
+    // faire un check pour le caracter "-" si trouve deux exactement !! 
     if(date[4] != '-' || date[7] != '-')
         return false;
     // faire un check sur loop pour verfiee est ce que tout les alphabets est numerics !!
@@ -53,40 +55,20 @@ bool BitcoinExchange::isValidDate(const std::string& date) const {
 }
 
 eError BitcoinExchange::isValidValue(const std::string& value, float& result) const {
-    //check decimal point 
-    // int dicimal = 0;
-    // int negatif = 0;
-    // for (size_t i = 0; i < value.size(); i++){
-    //     if (value[i] == '.')
-    //         dicimal++;
-    //     if(value[i] == '-')
-    //         negatif++;
-    // }
-    // if(dicimal > 1)
-    //     return INVALID;
-    // if(negatif != 0)
-    //     return INVALID;
-    
-    // faire un check pour string value pour verfier qui touts les caracters sont des numbres !!
-    // for(size_t i = 0; i < value.size(); i++){
-    //     if(!isdigit(value[i]) && value[i] != '.' )
-    //         return INVALID;
-    // }
-    // float number = std::atol()
 
-    // if(value.size() != 4) return INVALID;
+    // faire un check pour valide format " value"
+    if(!isspace(value[0]))
+        return INVALID;
+    if(isspace(value[1]))
+        return INVALID;
     std::stringstream convert(value);
     float number;
     if (!(convert >> number) || !(convert >> std::ws).eof())
         return INVALID;
-    // if(!(convert >> number))
-    //     return INVALID;
     if (number < 0)
         return NEGATIVE;
     if(number > 1000)
         return TOO_LARGE;
-    // if (!(convert >> number) || number < 0 || number > 1000)
-    //     return false;
     result = number;
     return VALID;
 }
@@ -140,6 +122,7 @@ void    BitcoinExchange::processInput(const std::string& filename){
         if(delimiterPos != std::string::npos){
             std::string date = line.substr(0, delimiterPos);
             std::string value = line.substr(delimiterPos + 1);
+            
             float resul = 0;
             if(!isValidDate(date)){
                 std::cerr << "Error: bad input => " << date << std::endl;
