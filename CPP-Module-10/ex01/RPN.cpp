@@ -1,35 +1,31 @@
 #include "RPN.hpp"
 
-
-
-
-bool RPN::isOperator(const char c){
-    if(c == '+' || c == '-' || c == '*' || c == '/') return true;
-    // si non on returnera false !!
-    return false;
+RPN::RPN() {}
+RPN::RPN(const RPN& other) { *this = other; }
+RPN& RPN::operator=(const RPN& other) {
+    if (this != &other) {
+        this->container = other.container;
+    }
+    return *this;
 }
+RPN::~RPN() {}
 
-void    RPN::calculate(const std::string expression){
+void    RPN::calculate(const std::string expression) {
 
-    std::stringstream stream(expression.c_str());
+    std::stringstream stream(expression);
     std::string token;
-    // float res;
 
-    while (stream >> token)
-    {
+    while (stream >> token) {
         if(token.size() != 1)
             throw std::runtime_error("Token : 1 seul caractère");
-
-        // traitement de token 
-        if(isdigit(token.c_str()[0])){container.push(std::atof(token.c_str())); continue ;}
-        else if (isOperator(token.c_str()[0])){
-            // faire un check on doit trouver deux numbers ou plus pour faire un calculation !!
+        if(isdigit(token[0])) 
+            container.push(std::atof(token.c_str()));
+        else if (token == "+" || token == "*" || token == "-" || token == "/"){
             if(container.size() < 2)
                 throw std::runtime_error("Erorr : On a besoin d'au moins deux opérandes");
-            float v2 = container.top();
-            container.pop();
-            float v1 = container.top();
-            container.pop();
+
+            float v2 = container.top(); container.pop();  
+            float v1 = container.top(); container.pop();
 
             // calcul
             if(token == "+"){container.push(v1 + v2);}
@@ -46,7 +42,7 @@ void    RPN::calculate(const std::string expression){
             throw std::runtime_error("Obligatoire : 1 seul caractère (0-9 ou opérateur)");
     }
     if(container.size() != 1)
-        throw std::runtime_error("Error : ");
+        throw std::runtime_error("Error");
     // tout passer goooood !
     std::cout << container.top() << std::endl;
 }
