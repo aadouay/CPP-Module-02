@@ -27,12 +27,10 @@ void    RPN::calculate(const std::string expression) {
             float v2 = container.top(); container.pop();  
             float v1 = container.top(); container.pop();
 
-            // calcul
             if(token == "+"){container.push(v1 + v2);}
             else if(token == "-"){container.push(v1 - v2);}
             else if(token == "*"){container.push(v1 * v2);}
             else if(token == "/"){
-                // check si on a 0 sur v2 !
                 if(v2 == 0)
                     throw std::runtime_error("Error: Division par zéro.");
                 container.push(v1 / v2);
@@ -43,6 +41,5 @@ void    RPN::calculate(const std::string expression) {
     }
     if(container.size() != 1)
         throw std::runtime_error("Error");
-    // tout passer goooood !
     std::cout << container.top() << std::endl;
 }
