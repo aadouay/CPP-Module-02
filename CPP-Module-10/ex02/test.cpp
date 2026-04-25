@@ -42,9 +42,10 @@ void    sort(std::vector<int>& stock){
     }
 
     sort(biggers);
-
-    for (size_t i = 0; i < smallers.size(); i++)
-        insert_elements(biggers, smallers[i]);
+    insert_elements(biggers, smallers[0]);
+    // Insertion des autres éléments selon l'ordre de Jacobsthal !
+    // for (size_t i = 0; i < smallers.size(); i++)
+    //     insert_elements(biggers, smallers[i]);
     if(leftOver != -1)
         insert_elements(biggers, leftOver);
     stock = biggers;
