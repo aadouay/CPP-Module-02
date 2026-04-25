@@ -49,5 +49,4 @@ void sort(std::vector<int> stock) {
 
     // insert the smallers in the biggers
 
-    
 }

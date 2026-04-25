@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
+
+
 
 std::vector<std::pair<int, int> >   make_paire(const std::vector<int>& stock){
 
@@ -16,14 +19,17 @@ std::vector<std::pair<int, int> >   make_paire(const std::vector<int>& stock){
     return stock_paire;
 }
 
-void    sort(const std::vector<int>& stock){
+void    insert_elements(std::vector<int>& stack, int value){
+
+    std::vector<int>::iterator position = std::lower_bound(stack.begin(), stack.end(), value);
+    stack.insert(position, value);
+}
+
+void    sort(std::vector<int>& stock){
     if (stock.size() <= 1)
         return;
     std::vector <std::pair<int, int> > stock_pair = make_paire(stock);
-    // for (size_t i = 0; i < stock_pair.size(); i++)
-    // {
-    //     std::cout << "first -> " << stock_pair[i].first << " | second -> " << stock_pair[i].second << std::endl;
-    // }
+
     int leftOver = -1;
     if (stock.size() % 2 == 1)
         leftOver = stock.back();
@@ -36,6 +42,12 @@ void    sort(const std::vector<int>& stock){
     }
 
     sort(biggers);
+
+    for (size_t i = 0; i < smallers.size(); i++)
+        insert_elements(biggers, smallers[i]);
+    if(leftOver != -1)
+        insert_elements(biggers, leftOver);
+    stock = biggers;
 }
 
 int main(){
