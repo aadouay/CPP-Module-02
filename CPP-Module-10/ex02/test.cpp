@@ -25,6 +25,12 @@ void    insert_elements(std::vector<int>& stack, int value){
     stack.insert(position, value);
 }
 
+int jacobsthal(int n) {
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
+}
+
 void    sort(std::vector<int>& stock){
     if (stock.size() <= 1)
         return;
@@ -44,8 +50,15 @@ void    sort(std::vector<int>& stock){
     sort(biggers);
     insert_elements(biggers, smallers[0]);
     // Insertion des autres éléments selon l'ordre de Jacobsthal !
-    // for (size_t i = 0; i < smallers.size(); i++)
-    //     insert_elements(biggers, smallers[i]);
+    int step = 2;
+
+    while (true){
+        int current = jacobsthal(step + 1);
+        int previous = jacobsthal(step);
+
+        
+    }
+    
     if(leftOver != -1)
         insert_elements(biggers, leftOver);
     stock = biggers;
