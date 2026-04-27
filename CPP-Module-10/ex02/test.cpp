@@ -25,13 +25,35 @@ void    insert_elements(std::vector<int>& stack, int value){
     stack.insert(position, value);
 }
 
-int jacobsthal(int n) {
-    if (n == 0) return 0;
-    if (n == 1) return 1;
-    return jacobsthal(n - 1) + 2 * jacobsthal(n - 2);
+// seq jaco = 0, 1, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461 ...
+
+std::vector<int> jacobsthal(size_t n) {
+
+    std::vector<int> seq;
+    if(n <= 1)
+        return seq;
+    seq.push_back(0); // j(0) = 0
+    seq.push_back(1); // j(1) = 1 et j(2) = 1
+    seq.push_back(1); // jacob stall starts with : 0 1 1 ...
+
+    // formule de récurrence : j(n) = j(n - 1) + 2 * j(n - 2)
+    for (size_t i = 3; i < n; i++){                     // ind  0  1
+        int next_value = seq[i - 1] + 2 * seq[i - 2];   // seq [0, 1] --> 3 - 1 = 2 , 3 - 2 = 1  
+        if(seq.back() > n)
+            break ;
+        seq.push_back(next_value);
+    }
+    
+    return seq;
 }
 
 void    sort(std::vector<int>& stock){
+
+    // std::cout << "stock avant tri : " << std::endl;
+    // for (size_t i = 0; i < stock.size(); i++)
+    //     std::cout << stock[i] << " ";
+    // std::cout << std::endl;
+
     if (stock.size() <= 1)
         return;
     std::vector <std::pair<int, int> > stock_pair = make_paire(stock);
@@ -48,23 +70,53 @@ void    sort(std::vector<int>& stock){
     }
 
     sort(biggers);
-    insert_elements(biggers, smallers[0]);
     // Insertion des autres éléments selon l'ordre de Jacobsthal !
-    int step = 2;
+    // hadi makhdamach asat !
+    std::vector<int> jseq = jacobsthal (smallers.size() + 2); // 0 1 1 3 5
 
-    while (true){
-        int current = jacobsthal(step + 1);
-        int previous = jacobsthal(step);
-
-        
+    std::vector<int> isertionOrder;
+    isertionOrder.push_back(0);
+    for (int i = 3 ; i < jseq.size(); i++) // 1 2
+    {
+        int second = jseq[i];
+        int first = jseq[i - 1];
+        for (int j = second - 1; j >= first; j--)
+        {
+            std::cout << "j : " << j << std::endl;
+            if (j < smallers.size())
+                isertionOrder.push_back(j);
+        }
     }
-    
+
+    // for (std::size_t i = 0; i < isertionOrder.size(); i++)
+    // {
+    //     std::cout << isertionOrder[i] << " ";
+    // }
+    // std::cout << std::endl;
+
+    for (std::size_t i = 0; i < isertionOrder.size(); i++)
+    {
+        int c = smallers[isertionOrder[i]];
+        insert_elements(biggers, c);
+    }
+
     if(leftOver != -1)
         insert_elements(biggers, leftOver);
     stock = biggers;
 }
 
-int main(){
-    std::vector<int> stock = {9, 3, 7, 1, 8, 2};
+int main(int ac, char **av){
+
+    if (ac == 1)
+        return 1;
+    std::vector<int> stock;
+    for (int i = 1; i < ac; i++)
+    {
+        stock.push_back(std::atoi(av[i]));
+    }
     sort(stock);
+    for (int i = 0; i < stock.size(); i++)
+        std::cout << stock[i] << " ";
+    std::cout << std::endl;
+    return 0;
 }
