@@ -1,52 +1,29 @@
 #include <iostream>
 #include <vector>
+#include "PmergeMe.hpp"
 
+int main(int ac, char **av){
 
-std::vector<std::pair<int, int> > make_pairs(const std::vector<int>& stock)
-{
-    std::vector<std::pair<int, int> > pairs;
-
-    for (size_t i = 0; i + 1 < stock.size(); i += 2)
-    {
-        int a = stock[i];
-        int b = stock[i + 1];
-        if (a > b)
-            std::swap(a, b);
-        pairs.push_back(std::make_pair(a, b));
+    if(ac < 2){
+        // std::cout << "ikhan" << std::endl;
+        return 1;
     }
-
-    return pairs;
-}
-
-int main() {
-
-    std::vector<int> stock = {9, 3, 7, 1, 8, 2};
-
-    sort(stock);
-}
-
-void sort(std::vector<int> stock) {
-
-    if (stock.size() <= 1)
-        return;
-
-    std::vector<std::pair<int, int> > stockPairs = make_pairs(stock);
-
-    int leftOver = -1;
-    if (stock.size() % 2 == 1)
-        leftOver = stock.back();
-
-    std::vector<int> smallers;
-    std::vector<int> biggers;
-
-    for (std::vector<std::pair<int, int> >::const_iterator it = stockPairs.begin(); it != stockPairs.end(); ++it)
+        
+    try
     {
-        smallers.push_back(it->first);
-        biggers.push_back(it->second);
+        PmergeMe stack;
+        stack.parse_input(av);
+        std::cout << "Avant : ";
+        // std::cout << std::endl;
+        stack.print_container_vec();
+        // std::cout << std::endl;
+        std::cout << "Apres : ";
+        stack.sort_vec(stack.stock_vec);
+        stack.print_container_vec();
     }
-
-    sort(biggers);
-
-    // insert the smallers in the biggers
-
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
 }
