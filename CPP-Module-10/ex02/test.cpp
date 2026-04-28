@@ -34,25 +34,20 @@ std::vector<int> jacobsthal(size_t n) {
         return seq;
     seq.push_back(0); // j(0) = 0
     seq.push_back(1); // j(1) = 1 et j(2) = 1
-    seq.push_back(1); // jacob stall starts with : 0 1 1 ...
+    seq.push_back(1); // jacobsthal starts with : 0 1 1 ...
 
     // formule de récurrence : j(n) = j(n - 1) + 2 * j(n - 2)
     for (size_t i = 3; i < n; i++){                     // ind  0  1
-        int next_value = seq[i - 1] + 2 * seq[i - 2];   // seq [0, 1] --> 3 - 1 = 2 , 3 - 2 = 1  
+        int next_value = seq[i - 1] + 2 * seq[i - 2];   // seq [0, 1] --> 3 - 1 = 2 , 3 - 2 = 1
         if(seq.back() > n)
             break ;
         seq.push_back(next_value);
     }
-    
+
     return seq;
 }
 
 void    sort(std::vector<int>& stock){
-
-    // std::cout << "stock avant tri : " << std::endl;
-    // for (size_t i = 0; i < stock.size(); i++)
-    //     std::cout << stock[i] << " ";
-    // std::cout << std::endl;
 
     if (stock.size() <= 1)
         return;
@@ -70,29 +65,20 @@ void    sort(std::vector<int>& stock){
     }
 
     sort(biggers);
-    // Insertion des autres éléments selon l'ordre de Jacobsthal !
-    // hadi makhdamach asat !
-    std::vector<int> jseq = jacobsthal (smallers.size() + 2); // 0 1 1 3 5
+    std::vector<int> jseq = jacobsthal (smallers.size() + 2); // par example si smallers.size() = 2 , jacobsthal(4) = 0 1 1 3
 
     std::vector<int> isertionOrder;
-    isertionOrder.push_back(0);
-    for (int i = 3 ; i < jseq.size(); i++) // 1 2
+    isertionOrder.push_back(0); // car on doit insérer le plus petit élément en premier
+    for (int i = 3 ; i < jseq.size(); i++) // on commence à 3 car les trois premiers éléments de la séquence de jacobsthal sont 0, 1, 1 et on les a déjà traité
     {
         int second = jseq[i];
         int first = jseq[i - 1];
         for (int j = second - 1; j >= first; j--)
         {
-            std::cout << "j : " << j << std::endl;
             if (j < smallers.size())
                 isertionOrder.push_back(j);
         }
     }
-
-    // for (std::size_t i = 0; i < isertionOrder.size(); i++)
-    // {
-    //     std::cout << isertionOrder[i] << " ";
-    // }
-    // std::cout << std::endl;
 
     for (std::size_t i = 0; i < isertionOrder.size(); i++)
     {
