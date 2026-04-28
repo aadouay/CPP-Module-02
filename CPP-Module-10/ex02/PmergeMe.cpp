@@ -1,7 +1,7 @@
 #include "PmergeMe.hpp"
 
 
-void    PmergeMe::parse_input(char **args){
+void    PmergeMe::parse_input_and_sort(char **args){
 
     // faire un check sur tous les args[i] apres tout est bien stockeeee zmarrr ! 
     for (size_t i = 1; args[i] != NULL; i++)
@@ -21,6 +21,23 @@ void    PmergeMe::parse_input(char **args){
         stock_vec.push_back(number);
         stock_deq.push_back(number);
     }
+
+    std::cout << "Avant : ";
+    this->print_container_vec();
+    std::cout << "Apres : ";
+    std::clock_t start = std::clock();
+    this->sort_vec(this->stock_vec);
+    std::clock_t end = std::clock();
+    this->print_container_vec();
+    double time_us = (double)(end - start) * 1000000 / CLOCKS_PER_SEC;
+    std::cout << "Temps d'exécution avec le conteneur vector [...] : " << time_us << " us" << std::endl;
+    start = clock();
+    this->sort_deq(this->stock_deq);
+    // this->print_container_deq();
+    end = clock();
+    time_us = (double)(end - start) * 1000000 / CLOCKS_PER_SEC;
+    std::cout << "Temps d'exécution avec le conteneur deque [...] : " << time_us << " us" << std::endl;
+
 }
 
 
@@ -50,7 +67,7 @@ void    PmergeMe::print_container_deq(){
     std::cout << std::endl;
 }
 
-std::vector<std::pair<int, int> >   PmergeMe::make_paire(const std::vector<int>& stock){
+std::vector<std::pair<int, int> >   PmergeMe::make_paire_vec(const std::vector<int>& stock){
 
     std::vector<std::pair<int, int> > stock_paire;
 
@@ -65,9 +82,30 @@ std::vector<std::pair<int, int> >   PmergeMe::make_paire(const std::vector<int>&
     return stock_paire;
 }
 
-void    PmergeMe::insert_elements(std::vector<int>& stack, int value){
+std::deque<std::pair<int, int> >   PmergeMe::make_paire_deq(const std::deque<int>& stock){
+
+    std::deque<std::pair<int, int> > stock_paire;
+
+    for(size_t i = 0; i + 1 < stock.size(); i+=2){
+        int a = stock[i];
+        int b = stock[i + 1];
+        if(a > b)
+            std::swap(a, b);
+        stock_paire.push_back(std::pair<int, int>(a, b));
+    }
+
+    return stock_paire;
+}
+
+void    PmergeMe::insert_elements_vec(std::vector<int>& stack, int value){
 
     std::vector<int>::iterator position = std::lower_bound(stack.begin(), stack.end(), value);
+    stack.insert(position, value);
+}
+
+void    PmergeMe::insert_elements_deq(std::deque<int>& stack, int value){
+
+    std::deque<int>::iterator position = std::lower_bound(stack.begin(), stack.end(), value);
     stack.insert(position, value);
 }
 
@@ -95,7 +133,7 @@ void    PmergeMe::sort_vec(std::vector<int>& stock){
 
     if (stock.size() <= 1)
     return;
-    std::vector <std::pair<int, int> > stock_pair = make_paire(stock);
+    std::vector <std::pair<int, int> > stock_pair = make_paire_vec(stock);
 
     int leftOver = -1;
     if (stock.size() % 2 == 1)
@@ -127,10 +165,54 @@ void    PmergeMe::sort_vec(std::vector<int>& stock){
     for (std::size_t i = 0; i < isertionOrder.size(); i++)
     {
         int c = smallers[isertionOrder[i]];
-        insert_elements(biggers, c);
+        insert_elements_vec(biggers, c);
     }
 
     if(leftOver != -1)
-        insert_elements(biggers, leftOver);
+        insert_elements_vec(biggers, leftOver);
+    stock = biggers;
+}
+
+void    PmergeMe::sort_deq(std::deque<int>& stock){
+
+    if (stock.size() <= 1)
+    return;
+    std::deque <std::pair<int, int> > stock_pair = make_paire_deq(stock);
+
+    int leftOver = -1;
+    if (stock.size() % 2 == 1)
+        leftOver = stock.back();
+    std::deque<int> smallers;
+    std::deque<int> biggers;
+    for (size_t i = 0; i < stock_pair.size(); i++)
+    {
+        smallers.push_back(stock_pair[i].first);
+        biggers.push_back(stock_pair[i].second);
+    }
+
+    sort_deq(biggers);
+    std::vector<int> jseq = jacobsthal (smallers.size() + 2); // par example si smallers.size() = 2 , jacobsthal(4) = 0 1 1 3
+
+    std::vector<int> isertionOrder;
+    isertionOrder.push_back(0); // car on doit insérer le plus petit élément en premier
+    for (int i = 3 ; i < static_cast<int> (jseq.size()); i++) // on commence à 3 car les trois premiers éléments de la séquence de jacobsthal sont 0, 1, 1 et on les a déjà traité
+    {
+        int second = jseq[i];
+        int first = jseq[i - 1];
+        for (int j = second - 1; j >= first; j--)
+        {
+            if (j < static_cast<int> (smallers.size()))
+                isertionOrder.push_back(j);
+        }
+    }
+
+    for (std::size_t i = 0; i < isertionOrder.size(); i++)
+    {
+        int c = smallers[isertionOrder[i]];
+        insert_elements_deq(biggers, c);
+    }
+
+    if(leftOver != -1)
+        insert_elements_deq(biggers, leftOver);
     stock = biggers;
 }

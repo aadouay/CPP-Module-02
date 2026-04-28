@@ -12,18 +12,18 @@ int main(int ac, char **av){
     try
     {
         PmergeMe stack;
-        stack.parse_input(av);
-        std::cout << "Avant : ";
-        // std::cout << std::endl;
-        stack.print_container_vec();
-        // std::cout << std::endl;
-        std::cout << "Apres : ";
-        stack.sort_vec(stack.stock_vec);
-        stack.print_container_vec();
+        stack.parse_input_and_sort(av);
+        // std::cout << "Avant : ";
+        // // std::cout << std::endl;
+        // stack.print_container_vec();
+        // // std::cout << std::endl;
+        // std::cout << "Apres : ";
+        // stack.sort_vec(stack.stock_vec);
+        // stack.print_container_vec();
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    
+
 }
