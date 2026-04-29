@@ -44,13 +44,13 @@ void    PmergeMe::parse_input_and_sort(char **args){
     std::clock_t end = std::clock();
     this->print_container_vec();
     double time_us = (double)(end - start) * 1000000 / CLOCKS_PER_SEC;
-    std::cout << "Temps d'exécution avec le conteneur vector [...] : " << time_us << " us" << std::endl;
+    std::cout << "Temps d'exécution avec le conteneur vector : " << time_us << " us" << std::endl;
     start = clock();
     this->sort_deq(this->stock_deq);
     // this->print_container_deq();
     end = clock();
     time_us = (double)(end - start) * 1000000 / CLOCKS_PER_SEC;
-    std::cout << "Temps d'exécution avec le conteneur deque [...] : " << time_us << " us" << std::endl;
+    std::cout << "Temps d'exécution avec le conteneur deque : " << time_us << " us" << std::endl;
 
 }
 
