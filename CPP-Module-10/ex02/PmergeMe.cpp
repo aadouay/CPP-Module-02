@@ -60,10 +60,10 @@ void    PmergeMe::print_container_vec(){
     for (size_t i = 0; i < stock_vec.size(); i++)
     {
         std::cout << stock_vec[i] << " ";
-        if(i == 10){
-            std::cout << "[...]";
-            break ;
-        }
+        // if(i == 10){
+        //     std::cout << "[...]";
+        //     break ;
+        // }
     }
     std::cout << std::endl;
 }
@@ -73,10 +73,10 @@ void    PmergeMe::print_container_deq(){
     for (size_t i = 0; i < stock_deq.size(); i++)
     {
         std::cout << stock_deq[i] << " ";
-        if(i == 10){
-            std::cout << "[...]";
-            break ;
-        }
+        // if(i == 10){
+        //     std::cout << "[...]";
+        //     break ;
+        // }
     }
     std::cout << std::endl;
 }
