@@ -1,5 +1,18 @@
 #include "PmergeMe.hpp"
 
+// Constructeurs, destructeurs et opérateurs d'affectation
+PmergeMe::PmergeMe() {}
+PmergeMe::PmergeMe(const PmergeMe& other) : stock_vec(other.stock_vec), stock_deq(other.stock_deq) {}
+PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
+    if (this != &other) {
+        stock_vec = other.stock_vec;
+        stock_deq = other.stock_deq;
+    }
+    return *this;
+}
+PmergeMe::~PmergeMe() {}
+
+// Méthodes de la classe PmergeMe
 
 void    PmergeMe::parse_input_and_sort(char **args){
 
@@ -22,6 +35,7 @@ void    PmergeMe::parse_input_and_sort(char **args){
         stock_deq.push_back(number);
     }
 
+    // Affichage avant et après le tri, et calcul du temps d'exécution
     std::cout << "Avant : ";
     this->print_container_vec();
     std::cout << "Apres : ";

@@ -11,13 +11,11 @@ class PmergeMe{
         std::vector<int> stock_vec;
         std::deque<int> stock_deq;
     public:
-        // PmergeMe();
-        // PmergeMe(const PmergeMe& other);
-        // PmergeMe&   operator=(const PmergeMe& other);
-        // ~PmergeMe();
+        PmergeMe();
+        PmergeMe(const PmergeMe& other);
+        PmergeMe&   operator=(const PmergeMe& other);
+        ~PmergeMe();
 
-        // std::vector<int> stock_vec;
-        // std::deque<int> stock_deq;
         void    parse_input_and_sort(char **args);
         void    print_container_vec();
         void    print_container_deq();
