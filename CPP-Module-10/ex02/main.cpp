@@ -5,7 +5,7 @@
 int main(int ac, char **av){
 
     if(ac < 2){
-        // std::cout << "ikhan" << std::endl;
+        std::cout << "Usage: " << av[0] << " <numbers to sort>" << std::endl;
         return 1;
     }
         

@@ -47,7 +47,7 @@ std::vector<int> jacobsthal(size_t n) {
     return seq;
 }
 
-void    sort(std::vector<int>& stock){
+void    sort(std::vector<int>& stock){ // 0x1337
 
     if (stock.size() <= 1)
         return;
@@ -60,11 +60,11 @@ void    sort(std::vector<int>& stock){
     std::vector<int> biggers;
     for (size_t i = 0; i < stock_pair.size(); i++)
     {
-        smallers.push_back(stock_pair[i].first);
-        biggers.push_back(stock_pair[i].second);
+        smallers.push_back(stock_pair[i].first); // 0x1337small
+        biggers.push_back(stock_pair[i].second); // 0x1337big
     }
 
-    sort(biggers);
+    sort(biggers); // 0x1337big
     std::vector<int> jseq = jacobsthal (smallers.size() + 2); // par example si smallers.size() = 2 , jacobsthal(4) = 0 1 1 3
 
     std::vector<int> isertionOrder;
